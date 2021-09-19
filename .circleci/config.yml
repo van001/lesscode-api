@@ -1,0 +1,147 @@
+version: 2.1
+
+default: &defaults
+  parallelism: 1
+
+k6_performance_tests: &k6_performance_tests
+  run:
+    name: Running k6 tests
+    command: |
+      docker pull loadimpact/k6:latest
+      docker run --env ENV -i -v $HOME/project:/load/ loadimpact/k6:latest run /load/test/perf/perf.js
+
+orbs:
+  node: circleci/node@1.1.6
+  aws-ecr: circleci/aws-ecr@6.15.3
+  aws-ecs: circleci/aws-ecs@1.2.0
+
+jobs:
+  unit-test:
+    executor:
+      name: node/default
+    steps:
+      - add_ssh_keys:
+            fingerprints:
+              - "38:53:7b:38:03:b4:24:72:fe:3f:c9:7d:be:e3:7c:d9"
+      - checkout
+      - node/with-cache:
+          steps:
+            - run: npm install
+            - run: npm run test
+  functional-tests:
+    executor:
+      name: node/default
+    steps:
+      - add_ssh_keys:
+            fingerprints:
+              - "38:53:7b:38:03:b4:24:72:fe:3f:c9:7d:be:e3:7c:d9"
+      - checkout
+      - node/with-cache:
+          steps:
+            - run: npm install
+            - run: npm run func 
+  performance-tests:
+    <<: *defaults
+    machine: true
+    steps:
+      - checkout
+      - *k6_performance_tests  
+
+workflows:
+  test-build-n-deploy-image:
+    jobs:
+      - unit-test:
+          name: run-unit-tests
+      - aws-ecr/build-and-push-image:
+          context: dev
+          name: build-n-push-image
+          requires:
+            - run-unit-tests
+          account-url: AWS_ECR_ACCOUNT_URL
+          aws-access-key-id: AWS_ACCESS_KEY_ID
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+          attach-workspace : true
+          dockerfile: Dockerfile # use the dockerfile to build the image
+          path: .
+          region: AWS_REGION
+          repo: "{{SERVICE_NAME}}"
+          create-repo: true
+          tag: "${CIRCLE_SHA1}"
+      - aws-ecs/deploy-service-update:
+          context: dev
+          name: deploy-2-dev
+          requires:
+            - build-n-push-image
+          force-new-deployment: true
+          verify-revision-is-deployed: true
+          family: "${AWS_ECS_CLUSTER_NAME}-{{SERVICE_NAME}}" # task name
+          service-name : "{{SERVICE_NAME}}" # service name
+          cluster-name: "${AWS_ECS_CLUSTER_NAME}-cluster" 
+          container-image-name-updates: "container={{SERVICE_NAME}},tag=${CIRCLE_SHA1}"
+      - functional-tests:
+          context: dev
+          name: run-functional-tests
+          requires:
+            - deploy-2-dev
+      - performance-tests:
+          context: dev
+          name: run-performance-tests
+          requires:
+            - deploy-2-dev
+      - aws-ecs/deploy-service-update:
+          context: staging
+          name: deploy-2-staging
+          requires:
+            - run-functional-tests
+            - run-performance-tests
+          force-new-deployment: true
+          verify-revision-is-deployed: true
+          family: "${AWS_ECS_CLUSTER_NAME}-{{SERVICE_NAME}}" # task name
+          service-name : "{{SERVICE_NAME}}" # service name
+          cluster-name: "${AWS_ECS_CLUSTER_NAME}-cluster" 
+          container-image-name-updates: "container={{SERVICE_NAME}},tag=${CIRCLE_SHA1}"
+          filters:
+            branches:
+              only:
+                - main
+      - functional-tests:
+          context: dev
+          name: run-functional-tests-staging
+          requires:
+            - deploy-2-staging      
+      - aws-ecs/deploy-service-update:
+          context: demo
+          name: deploy-2-demo
+          requires:
+            - run-functional-tests-staging
+          force-new-deployment: true
+          verify-revision-is-deployed: true
+          family: "${AWS_ECS_CLUSTER_NAME}-{{SERVICE_NAME}}" # task name
+          service-name : "{{SERVICE_NAME}}" # service name
+          cluster-name: "${AWS_ECS_CLUSTER_NAME}-cluster"
+          container-image-name-updates: "container={{SERVICE_NAME}},tag=${CIRCLE_SHA1}"
+          filters:
+            branches:
+              only:
+                - main
+      - functional-tests:
+          context: dev
+          name: run-functional-tests-demo
+          requires:
+            - deploy-2-demo  
+      - aws-ecs/deploy-service-update:
+          context: prod
+          name: deploy-2-prod
+          requires:
+            - run-functional-tests-demo
+          force-new-deployment: true
+          verify-revision-is-deployed: true
+          family: "${AWS_ECS_CLUSTER_NAME}-{{SERVICE_NAME}}" # task name
+          service-name : "{{SERVICE_NAME}}" # service name
+          cluster-name: "${AWS_ECS_CLUSTER_NAME}-cluster"
+          container-image-name-updates: "container={{SERVICE_NAME}},tag=${CIRCLE_SHA1}"
+          filters:
+            branches:
+              only:
+                - main
+                
