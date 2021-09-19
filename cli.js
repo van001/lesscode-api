@@ -19,15 +19,18 @@ const files = [
     // Tests
     {from : './test/unit/index.test.js', to : '/test/unit/index.test.js'},
     {from : './test/functional/getHealth.js', to : '/test/functional/getHealth.js'},
+    {from : './test/perf/perf.js', to : '/test/perf/perf.js'},
+    {from : './test/config.js', to : '/test/config.js'},
     
     // CI / CD
     { from : '.gitignore', to : 'gitignore' },
     { from : 'sample-package.json', to : 'package.json' },
     { from : 'Dockerfile', to : 'Dockerfile' },
     { from : 'Dockerfile', to : 'Dockerfile' },
+    { from : './.circleci/config.yml', to : '/.circleci/config.yml' },
 ]
 
-const dirs = ['/rest','/src', '/src/functions','/test','/test/unit','/test/functional','/test/pef']
+const dirs = ['/rest','/src', '/.circleci','/src/functions','/test','/test/unit','/test/functional','/test/perf']
 
 
 const CopyFiles = files => async config => {

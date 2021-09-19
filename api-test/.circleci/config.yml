@@ -64,7 +64,7 @@ workflows:
           dockerfile: Dockerfile # use the dockerfile to build the image
           path: .
           region: AWS_REGION
-          repo: "{{{SERVICE_NAME}}}"
+          repo: "api-test"
           create-repo: true
           tag: "${CIRCLE_SHA1}"
       - aws-ecs/deploy-service-update:
@@ -74,10 +74,10 @@ workflows:
             - build-n-push-image
           force-new-deployment: true
           verify-revision-is-deployed: true
-          family: "${AWS_ECS_CLUSTER_NAME}-{{{SERVICE_NAME}}}" # task name
-          service-name : "{{{SERVICE_NAME}}}" # service name
+          family: "${AWS_ECS_CLUSTER_NAME}-api-test" # task name
+          service-name : "api-test" # service name
           cluster-name: "${AWS_ECS_CLUSTER_NAME}-cluster" 
-          container-image-name-updates: "container={{{SERVICE_NAME}}},tag=${CIRCLE_SHA1}"
+          container-image-name-updates: "container=api-test,tag=${CIRCLE_SHA1}"
       - functional-tests:
           context: dev
           name: run-functional-tests
@@ -96,10 +96,10 @@ workflows:
             - run-performance-tests
           force-new-deployment: true
           verify-revision-is-deployed: true
-          family: "${AWS_ECS_CLUSTER_NAME}-{{{SERVICE_NAME}}}" # task name
-          service-name : "{{{SERVICE_NAME}}}" # service name
+          family: "${AWS_ECS_CLUSTER_NAME}-api-test" # task name
+          service-name : "api-test" # service name
           cluster-name: "${AWS_ECS_CLUSTER_NAME}-cluster" 
-          container-image-name-updates: "container={{{SERVICE_NAME}}},tag=${CIRCLE_SHA1}"
+          container-image-name-updates: "container=api-test,tag=${CIRCLE_SHA1}"
           filters:
             branches:
               only:
@@ -116,10 +116,10 @@ workflows:
             - run-functional-tests-staging
           force-new-deployment: true
           verify-revision-is-deployed: true
-          family: "${AWS_ECS_CLUSTER_NAME}-{{{SERVICE_NAME}}}" # task name
-          service-name : "{{{SERVICE_NAME}}}" # service name
+          family: "${AWS_ECS_CLUSTER_NAME}-api-test" # task name
+          service-name : "api-test" # service name
           cluster-name: "${AWS_ECS_CLUSTER_NAME}-cluster"
-          container-image-name-updates: "container={{{SERVICE_NAME}}},tag=${CIRCLE_SHA1}"
+          container-image-name-updates: "container=api-test,tag=${CIRCLE_SHA1}"
           filters:
             branches:
               only:
@@ -136,10 +136,10 @@ workflows:
             - run-functional-tests-demo
           force-new-deployment: true
           verify-revision-is-deployed: true
-          family: "${AWS_ECS_CLUSTER_NAME}-{{{SERVICE_NAME}}}" # task name
-          service-name : "{{{SERVICE_NAME}}}" # service name
+          family: "${AWS_ECS_CLUSTER_NAME}-api-test" # task name
+          service-name : "api-test" # service name
           cluster-name: "${AWS_ECS_CLUSTER_NAME}-cluster"
-          container-image-name-updates: "container={{{SERVICE_NAME}}},tag=${CIRCLE_SHA1}"
+          container-image-name-updates: "container=api-test,tag=${CIRCLE_SHA1}"
           filters:
             branches:
               only:

@@ -1,5 +1,5 @@
 module.exports = {
-    local: 'http://localhost:{{{PORT}}}',
+    local: 'http://localhost:8092',
     dev : '',
     authHeader : ''
 }
