@@ -1,3 +1,5 @@
+'use strict'
+
 const {$M, Wait, lmap, FileRead, FileWrite, Print, utf8} =require('lesscode-fp')
 const $R = ret => async res => ret
 const dir = require('node-dir')

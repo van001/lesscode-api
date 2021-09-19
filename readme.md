@@ -6,9 +6,13 @@ CLI (Command line interface) for auto generating lesscode-code skeletal api serv
 
 yarn
 ```
+yarn global add lesscoe-api
 ```
 
 npm
+```
+npm install -g lesscoe-api
+```
 
 To create a new micro-service, go to the dir where you want to create the micro service and call
 

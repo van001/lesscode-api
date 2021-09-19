@@ -1,6 +1,6 @@
 {
-  "name": "api-auth",
-  "version": "1.0.0",
+  "name": "lesscode-api",
+  "version": "1.0.1",
   "main": "cli.js",
   "bin": "cli.js",
   "license": "MIT",
