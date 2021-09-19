@@ -1,15 +1,19 @@
 # Overview
-This is a template for lesscode micro-service. 
+CLI (Command line interface) for auto generating lesscode-code skeletal api service.
 
 # Usage
-1. Install the lesscode-cle globally
+1. Install the lesscode-api cli globally...
+
+yarn
 ```
 ```
+
+npm
 
 To create a new micro-service, go to the dir where you want to create the micro service and call
 
 ```
-node cli <api-name> <path> <port>
+lesscode-api <api-name> <path> <port>
 ```
 
 api-name ~ api-company, api-inventory etc,
