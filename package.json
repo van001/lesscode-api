@@ -1,6 +1,6 @@
 {
   "name": "lesscode-api",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "main": "cli.js",
   "bin": "cli.js",
   "license": "MIT",
