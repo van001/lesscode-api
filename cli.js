@@ -7,7 +7,7 @@ const fs = require('fs')
 const files = [
 
     // Startup
-    { from: './rest/api.yaml', to: '/rest/api.yaml' },
+    { from: '/rest/api.yaml', to: '/rest/api.yaml' },
     { from: 'index.js', to: 'index.js' },
     { from: 'config.js', to: 'config.js' },
     { from: 'sample-readme.md', to: 'readme.md' },
