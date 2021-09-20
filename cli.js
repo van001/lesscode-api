@@ -24,11 +24,10 @@ const files = [
     { from: `${__dirname}/test/config.js`, to: '/test/config.js' },
 
     // CI / CD
-    //{ from: `${__dirname}/.gitignore`, to: '.gitignore' },
     { from: `${__dirname}/sample-package.json`, to: 'package.json' },
     { from: `${__dirname}/Dockerfile`, to: 'Dockerfile' },
-    { from: `${__dirname}/Dockerfile`, to: 'Dockerfile' },
-    { from: `${__dirname}/.circleci/config.yml`, to: '/.circleci/config.yml' },
+    { from: `${__dirname}/.circleci/config.yml`, to: '/.circleci/config.yml' },  
+    { from: `${__dirname}/.gitignore`, to: '.gitignore' },
 ]
 
 const dirs = ['/rest', '/src', '/.circleci', '/src/functions', '/test', '/test/unit', '/test/functional', '/test/perf']
