@@ -2,7 +2,7 @@
 CLI (Command line interface) for auto generating lesscode-code skeletal api service.
 
 # Usage
-## 1. Install 
+### 1. Install 
 
 Install the lesscode-api cli globally...
 
@@ -16,7 +16,7 @@ npm
 npm install -g lesscode-api
 ```
 
-## Create new Micro-Service
+### Create new Micro-Service
 
 To create a new micro-service, go to the dir where you want to create the micro service and type
 
@@ -31,5 +31,5 @@ path : API path, e.g. - /api/v3/company
 
 port : API port, e.g. - 8092
 
-## Test the service
+### Test the service
 
