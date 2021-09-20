@@ -1,6 +1,6 @@
 {
   "name": "lesscode-api",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "main": "cli.js",
   "bin": {
     "lesscode-api": "cli.js"
