@@ -14,12 +14,15 @@ npm
 npm install -g lesscoe-api
 ```
 
-To create a new micro-service, go to the dir where you want to create the micro service and call
+To create a new micro-service, go to the dir where you want to create the micro service and type
 
 ```
 lesscode-api <api-name> <path> <port>
 ```
+Where :
 
-api-name ~ api-company, api-inventory etc,
+api-name ~ api-companyapi-inventory etc,
+
 path ~ /api/v3/company
+
 port 8092
