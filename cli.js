@@ -1,4 +1,4 @@
-const { $M, Wait, lmap, FileRead, FileWrite, Print, utf8 } = require("lesscode-fp")
+/**const { $M, Wait, lmap, FileRead, FileWrite, Print, utf8 } = require("lesscode-fp")
 const $R = ret => async res => ret
 const dir = require('node-dir')
 var mustache = require('mustache')
@@ -53,3 +53,5 @@ const ReadInput = () => {
     return ((process.argv.length < 4) ? PrintUsage() : { SERVICE_NAME: process.argv[2], PREFIX: process.argv[3], PORT: process.argv[4] })
 }
 $M(Wait, CopyFiles(files), MakeDirs, ReadInput)()
+**/
+console.log('worked...')
