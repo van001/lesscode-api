@@ -1,9 +1,10 @@
 {
   "name": "lesscode-api",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "main": "cli.js",
   "bin": {
-    "lesscode-api" :"cli.js"},
+    "lesscode-api": "cli.js"
+  },
   "license": "MIT",
   "dependencies": {
     "aws-sdk": "^2.792.0",
