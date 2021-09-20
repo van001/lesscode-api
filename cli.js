@@ -1,5 +1,5 @@
 #! /usr/bin/env node
-const { $M, Wait, lmap, FileRead, FileWrite, Print, utf8 } = require('lesscode-fp')
+const { $M, Wait, lmap, FileRead, FileWrite, Hint, utf8 } = require('lesscode-fp')
 const $R = ret => async res => ret
 const dir = require('node-dir')
 var mustache = require('mustache')
@@ -14,21 +14,21 @@ const files = [
     { from: `${__dirname}/sample.env`, to: '.env' },
 
     // Impl
-    { from: './src/functions/getHealth.js', to: '/src/functions/getHealth.js' },
+    { from: `${__dirname}/src/functions/getHealth.js`, to: '/src/functions/getHealth.js' },
 
 
     // Tests
-    { from: './test/unit/index.test.js', to: '/test/unit/index.test.js' },
-    { from: './test/functional/getHealth.js', to: '/test/functional/getHealth.js' },
-    { from: './test/perf/perf.js', to: '/test/perf/perf.js' },
-    { from: './test/config.js', to: '/test/config.js' },
+    { from: `${__dirname}/test/unit/index.test.js`, to: '/test/unit/index.test.js' },
+    { from: `${__dirname}/test/functional/getHealth.js`, to: '/test/functional/getHealth.js' },
+    { from: `${__dirname}/test/perf/perf.js`, to: '/test/perf/perf.js' },
+    { from: `${__dirname}/test/config.js`, to: '/test/config.js' },
 
     // CI / CD
-    { from: '.gitignore', to: 'gitignore' },
-    { from: 'sample-package.json', to: 'package.json' },
-    { from: 'Dockerfile', to: 'Dockerfile' },
-    { from: 'Dockerfile', to: 'Dockerfile' },
-    { from: './.circleci/config.yml', to: '/.circleci/config.yml' },
+    { from: `${__dirname}/.gitignore`, to: 'gitignore' },
+    { from: `${__dirname}/sample-package.json`, to: 'package.json' },
+    { from: `${__dirname}/Dockerfile`, to: 'Dockerfile' },
+    { from: `${__dirname}/Dockerfile`, to: 'Dockerfile' },
+    { from: `${__dirname}/.circleci/config.yml`, to: '/.circleci/config.yml' },
 ]
 
 const dirs = ['/rest', '/src', '/.circleci', '/src/functions', '/test', '/test/unit', '/test/functional', '/test/perf']
@@ -39,7 +39,7 @@ const CopyFiles = files => async config => {
         const ProcessTemplate = config => data => mustache.render(data, config)
 
 
-        return $M(FileWrite(utf8)(`${config.SERVICE_NAME}/${path.to}`), ProcessTemplate(config), FileRead(utf8), Print)(path.from)
+        return $M(FileWrite(utf8)(`${config.SERVICE_NAME}/${path.to}`), ProcessTemplate(config), FileRead(utf8), Hint(`Generated...${path.from}`))(path.from)
     }
     return lmap(CopyFile(config))(files)
 }
