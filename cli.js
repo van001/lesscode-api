@@ -8,10 +8,10 @@ const files = [
 
     // Startup
     { from: `${__dirname}/rest/api.yaml`, to: '/rest/api.yaml' },
-    { from: 'index.js', to: 'index.js' },
-    { from: 'config.js', to: 'config.js' },
-    { from: 'sample-readme.md', to: 'readme.md' },
-    { from: 'sample.env', to: '.env' },
+    { from: `${__dirname}/index.js`, to: 'index.js' },
+    { from: `${__dirname}/config.js`, to: 'config.js' },
+    { from: `${__dirname}/sample-readme.md`, to: 'readme.md' },
+    { from: `${__dirname}/sample.env`, to: '.env' },
 
     // Impl
     { from: './src/functions/getHealth.js', to: '/src/functions/getHealth.js' },
@@ -39,7 +39,7 @@ const CopyFiles = files => async config => {
         const ProcessTemplate = config => data => mustache.render(data, config)
 
 
-        return $M(FileWrite(utf8)(`${config.SERVICE_NAME}/${path.to}`), ProcessTemplate(config), FileRead(utf8))(path.from)
+        return $M(FileWrite(utf8)(`${config.SERVICE_NAME}/${path.to}`), ProcessTemplate(config), FileRead(utf8), Print)(path.from)
     }
     return lmap(CopyFile(config))(files)
 }
