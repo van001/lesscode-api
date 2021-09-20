@@ -21,8 +21,8 @@ lesscode-api <api-name> <path> <port>
 ```
 Where :
 
-api-name ~ api-companyapi-inventory etc,
+api-name : Name of the api, e.g. - api-company, api-inventory etc,
 
-path ~ /api/v3/company
+path : API path, e.g. - /api/v3/company
 
-port 8092
+port : API port, e.g. - 8092
