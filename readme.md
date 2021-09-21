@@ -1,6 +1,6 @@
 # Overview
 CLI (Command line interface) for auto generating lesscode-code skeletal api service.
-![lesscode-files.png](lesscode-files.png)
+![lesscode-dir.png](lesscode-dir.png)
 
 # Usage
 ### 1. Install 
