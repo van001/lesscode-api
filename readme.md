@@ -1,5 +1,6 @@
 # Overview
 CLI (Command line interface) for auto generating lesscode-code skeletal api service.
+![lesscode-files.png](lesscode-files.png)
 
 # Usage
 ### 1. Install 
@@ -54,7 +55,7 @@ npm install
 node .
 ```
 
-### 4. Test the healthcheck
+### 4. Test the health-check
 ```
 http://localhost:<port>/<path>/health
 ```
