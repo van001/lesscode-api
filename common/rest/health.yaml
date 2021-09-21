@@ -1,0 +1,11 @@
+components:
+    schemas:
+      Health:
+        properties:
+          status:
+            type: string
+          ts:
+            type: integer
+        required:
+          - status
+          - ts

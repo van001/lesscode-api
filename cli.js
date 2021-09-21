@@ -6,8 +6,13 @@ var mustache = require('mustache')
 const fs = require('fs')
 const files = [
 
-    // Startup
+    // Contract
     { from: `${__dirname}/rest/api.yaml`, to: '/rest/api.yaml' },
+    { from: `${__dirname}/common/rest/error.yaml`, to: '/common/rest/error.yaml' },
+    { from: `${__dirname}/common/rest/health.yaml`, to: '/common/rest/health.yaml' },
+
+
+    // Startup
     { from: `${__dirname}/index.js`, to: 'index.js' },
     { from: `${__dirname}/config.js`, to: 'config.js' },
     { from: `${__dirname}/sample-readme.md`, to: 'readme.md' },
@@ -30,7 +35,7 @@ const files = [
     { from: `${__dirname}/sample-gitignore`, to: '.gitignore' },
 ]
 
-const dirs = ['/rest', '/src', '/.circleci', '/src/functions', '/test', '/test/unit', '/test/functional', '/test/perf']
+const dirs = ['/common', '/common/rest', '/rest', '/src', '/.circleci', '/src/functions', '/test', '/test/unit', '/test/functional', '/test/perf']
 
 
 const CopyFiles = files => async config => {

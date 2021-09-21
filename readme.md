@@ -1,7 +1,5 @@
 # Overview
-CLI (Command line interface) for auto generating lesscode-code skeletal api service.
-
-![lesscode-dir.png](lesscode-dir.png)
+CLI (Command line interface) for auto generating lesscode-code skeletal api service. 
 
 # Usage
 ### 1. Install 
@@ -60,6 +58,18 @@ node .
 ```
 http://localhost:<port>/<path>/health
 ```
+
+# Under the hood
+
+The following directories / files are created when you create a new micro-service
+
+![lesscode-dir.png](lesscode-dir.png)
+
+**rest** : contain the api.yaml, where you define your contract in open-api (3.0) format. lesscode-gateway atuomatically maps the endpoints (path) to the functions.
+**src** : contain all the functions. 
+**test** : contain all the test files - unit, functional & performace.
+**.circleci** CI/CD yaml. Currenly we support circleci.
+
 
 
 
