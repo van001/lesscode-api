@@ -46,6 +46,17 @@ jobs:
     steps:
       - checkout
       - *k6_performance_tests  
+  snyk-app-scan:
+    docker:
+      - image: 'cimg/node:lts'
+    steps:
+      - checkout
+      - run: npm ci
+      - snyk/scan:
+          fail-on-issues: false
+          monitor-on-build: true
+          severity-threshold: high
+          token-variable: SNYK_TOKEN
 
 workflows:
   test-build-n-deploy-image:
@@ -67,6 +78,15 @@ workflows:
           repo: "{{{SERVICE_NAME}}}"
           create-repo: true
           tag: "${CIRCLE_SHA1}"
+      - snyk-app-scan:
+          context: dev
+          name: snyk-app-scan
+          requires:
+            - build-n-push-image
+          filters:
+            branches:
+              only:
+                - main
       - aws-ecs/deploy-service-update:
           context: dev
           name: deploy-2-dev
