@@ -5,3 +5,4 @@ aws.json
 *.key
 api-*.json
 .env
+package-lock.json
